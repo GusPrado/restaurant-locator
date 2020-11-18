@@ -20,7 +20,7 @@ export const Search = styled.section`
   padding: 16px;
 `
 
-export const Logo = style.img`
+export const Logo = styled.img`
   margin-bottom: 16px;
 `
 
