@@ -6,7 +6,16 @@ import Slider from 'react-slick';
 import logo from '../../assets/logo.svg';
 import restaurant from '../../assets/restaurante-fake.png';
 
-import { Container, Search, Logo, Wrapper, Map, CarouselTitle } from './styles';
+import {
+  Container,
+  Search,
+  Logo,
+  Wrapper,
+  Map,
+  CarouselTitle,
+  Carousel,
+} from './styles';
+import { Card } from '../../components';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
@@ -34,20 +43,14 @@ const Home = () => {
             <Input onChange={evt => setInputValue(evt.target.value)} />
           </TextField>
           <CarouselTitle>Na sua área</CarouselTitle>
-          <Slider {...settings}>
-            <div>
-              <img src={restaurant} alt="Restaurant" />
-            </div>
-            <div>
-              <img src={restaurant} alt="Restaurant" />
-            </div>
-            <div>
-              <img src={restaurant} alt="Restaurant" />
-            </div>
-            <div>
-              <img src={restaurant} alt="Restaurant" />
-            </div>
-          </Slider>
+          <Carousel {...settings}>
+            <Card photo={restaurant} title="Rest name" />
+            <Card photo={restaurant} title="Rest name" />
+            <Card photo={restaurant} title="Rest name" />
+            <Card photo={restaurant} title="Rest name" />
+            <Card photo={restaurant} title="Rest name" />
+            <Card photo={restaurant} title="Rest name" />
+          </Carousel>
         </Search>
       </Container>
       <Map />
