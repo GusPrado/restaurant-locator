@@ -11,15 +11,16 @@ import {
   Search,
   Logo,
   Wrapper,
-  Map,
   CarouselTitle,
   Carousel,
 } from './styles';
-import { Card, RestaurantCard, Modal } from '../../components';
+
+import { Card, RestaurantCard, Modal, Map } from '../../components';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [query, setQuery] = useState(null);
 
   const settings = {
     dots: false,
@@ -29,6 +30,12 @@ const Home = () => {
     slidesToScroll: 4,
     adaptiveHeight: true,
   };
+
+  function handleKeyPress(evt) {
+    if (evt.key === 'Enter') {
+      setQuery(inputValue);
+    }
+  }
 
   return (
     <Wrapper>
@@ -41,7 +48,10 @@ const Home = () => {
             value={inputValue}
             trailingIcon={<MaterialIcon role="button" icon="search" />}
           >
-            <Input onChange={evt => setInputValue(evt.target.value)} />
+            <Input
+              onKeyPress={handleKeyPress}
+              onChange={evt => setInputValue(evt.target.value)}
+            />
           </TextField>
           <CarouselTitle>Na sua área</CarouselTitle>
           <Carousel {...settings}>
@@ -55,8 +65,8 @@ const Home = () => {
         </Search>
         <RestaurantCard />
       </Container>
-      <Map />
-      <Modal open={modalOpen} onClose={() => setModalOpen(!modalOpen)} />
+      <Map query={query} />
+      {/* <Modal open={modalOpen} onClose={() => setModalOpen(!modalOpen)} /> */}
     </Wrapper>
   );
 };
