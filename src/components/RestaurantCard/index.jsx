@@ -12,8 +12,8 @@ import {
   RestPhoto,
 } from './styles';
 
-const RestaurantCard = ({ restaurant }) => (
-  <Restaurant>
+const RestaurantCard = ({ restaurant, onClick }) => (
+  <Restaurant onClick={onClick}>
     <RestaurantInfo>
       <Title>{restaurant.name}</Title>
       <ReactStars
