@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 
-import restaurant from '../../assets/restaurante-fake.png';
+import restaurantDefaultPic from '../../assets/restaurante-fake.png';
 
 import {
   Restaurant,
@@ -11,10 +12,10 @@ import {
   RestPhoto,
 } from './styles';
 
-const RestaurantCard = () => (
+const RestaurantCard = ({ restaurant }) => (
   <Restaurant>
     <RestaurantInfo>
-      <Title>Nome do restaurante</Title>
+      <Title>{restaurant.name}</Title>
       <ReactStars
         count={5}
         isHalf
@@ -22,9 +23,14 @@ const RestaurantCard = () => (
         edit={false}
         activeColor="#e7711c"
       />
-      <Address>Rua dos bobos, no. 0</Address>
+      <Address>{restaurant.vicinity || restaurant.formatted_address}</Address>
     </RestaurantInfo>
-    <RestPhoto src={restaurant} alt="Restaurant front" />
+    <RestPhoto
+      src={
+        restaurant.photos ? restaurant.photos[0].getUrl() : restaurantDefaultPic
+      }
+      alt="Restaurant front"
+    />
   </Restaurant>
 );
 

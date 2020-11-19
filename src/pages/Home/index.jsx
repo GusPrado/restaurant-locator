@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import TextField, { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 
 import logo from '../../assets/logo.svg';
-import restaurant from '../../assets/restaurante-fake.png';
+import restaurantDefaultPic from '../../assets/restaurante-fake.png';
 
 import {
   Container,
@@ -21,6 +24,7 @@ const Home = () => {
   const [inputValue, setInputValue] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [query, setQuery] = useState(null);
+  const { restaurants } = useSelector(state => state.restaurants);
 
   const settings = {
     dots: false,
@@ -55,15 +59,22 @@ const Home = () => {
           </TextField>
           <CarouselTitle>Na sua área</CarouselTitle>
           <Carousel {...settings}>
-            <Card photo={restaurant} title="Rest name" />
-            <Card photo={restaurant} title="Rest name" />
-            <Card photo={restaurant} title="Rest name" />
-            <Card photo={restaurant} title="Rest name" />
-            <Card photo={restaurant} title="Rest name" />
-            <Card photo={restaurant} title="Rest name" />
+            {restaurants.map(restaurant => (
+              <Card
+                key={restaurant.place_id}
+                photo={
+                  restaurant.photos
+                    ? restaurant.photos[0].getUrl()
+                    : restaurantDefaultPic
+                }
+                title={restaurant.name}
+              />
+            ))}
           </Carousel>
         </Search>
-        <RestaurantCard />
+        {restaurants.map(restaurant => (
+          <RestaurantCard restaurant={restaurant} />
+        ))}
       </Container>
       <Map query={query} />
       {/* <Modal open={modalOpen} onClose={() => setModalOpen(!modalOpen)} /> */}
