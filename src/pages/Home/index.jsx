@@ -20,7 +20,14 @@ import {
   ModalContent,
 } from './styles';
 
-import { Card, RestaurantCard, Modal, Map } from '../../components';
+import {
+  Card,
+  RestaurantCard,
+  Modal,
+  Map,
+  Loader,
+  Skeleton,
+} from '../../components';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
@@ -68,20 +75,26 @@ const Home = () => {
               onChange={evt => setInputValue(evt.target.value)}
             />
           </TextField>
-          <CarouselTitle>Na sua área</CarouselTitle>
-          <Carousel {...settings}>
-            {restaurants.map(restaurant => (
-              <Card
-                key={restaurant.place_id}
-                photo={
-                  restaurant.photos
-                    ? restaurant.photos[0].getUrl()
-                    : restaurantDefaultPic
-                }
-                title={restaurant.name}
-              />
-            ))}
-          </Carousel>
+          {restaurants.length > 0 ? (
+            <>
+              <CarouselTitle>Na sua área</CarouselTitle>
+              <Carousel {...settings}>
+                {restaurants.map(restaurant => (
+                  <Card
+                    key={restaurant.place_id}
+                    photo={
+                      restaurant.photos
+                        ? restaurant.photos[0].getUrl()
+                        : restaurantDefaultPic
+                    }
+                    title={restaurant.name}
+                  />
+                ))}
+              </Carousel>
+            </>
+          ) : (
+            <Loader />
+          )}
         </Search>
         {restaurants.map(restaurant => (
           <RestaurantCard
@@ -92,16 +105,27 @@ const Home = () => {
       </Container>
       <Map query={query} placeId={placeId} />
       <Modal open={modalOpen} onClose={() => setModalOpen(!modalOpen)}>
-        <ModalTitle>{restaurantSelected?.name}</ModalTitle>
-        <ModalContent>
-          {restaurantSelected?.formatted_phone_number}
-        </ModalContent>
-        <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
-        <ModalContent style={{ fontWeight: 'bold' }}>
-          {restaurantSelected?.opening_hours?.open_now
-            ? 'Aberto agora :-)'
-            : 'Fechado neste momento :('}
-        </ModalContent>
+        {restaurantSelected ? (
+          <>
+            <ModalTitle>{restaurantSelected?.name}</ModalTitle>
+            <ModalContent>
+              {restaurantSelected?.formatted_phone_number}
+            </ModalContent>
+            <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
+            <ModalContent style={{ fontWeight: 'bold' }}>
+              {restaurantSelected?.opening_hours?.open_now
+                ? 'Aberto agora :-)'
+                : 'Fechado neste momento :('}
+            </ModalContent>
+          </>
+        ) : (
+          <>
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+            <Skeleton width="10px" height="10px" />
+          </>
+        )}
       </Modal>
     </Wrapper>
   );
