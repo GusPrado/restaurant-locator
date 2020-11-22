@@ -71,6 +71,7 @@ const Home = () => {
             trailingIcon={<MaterialIcon role="button" icon="search" />}
           >
             <Input
+              value={inputValue}
               onKeyPress={handleKeyPress}
               onChange={evt => setInputValue(evt.target.value)}
             />

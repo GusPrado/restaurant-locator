@@ -25,7 +25,7 @@ const ImageCard = ({ photo, title }) => {
 
   useEffect(() => {
     const imageLoader = new Image();
-    imageLoaded.src = photo;
+    imageLoader.src = photo;
     imageLoader.onload = () => setImageLoaded(true);
   }, [photo]);
 
